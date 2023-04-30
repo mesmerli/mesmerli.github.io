@@ -1,1 +1,8 @@
 theme: minima
+
+defaults:
+  - 
+    scope:
+      path: "index.md"
+    values:
+      permalink: "index.html"
