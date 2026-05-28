@@ -13,6 +13,19 @@ const PORT = 3000;
 
 app.use(express.json());
 
+// Top-level complete request logger to identify MIME type mismatch files
+app.use((req, res, next) => {
+  const originalSetHeader = res.setHeader;
+  res.setHeader = function(name, value) {
+    if (name.toLowerCase() === 'content-type') {
+      const logMsg = `[${new Date().toISOString()}] HEADERS-SET: ${req.method} ${req.path} -> ${name}: ${value}\n`;
+      fs.appendFileSync(path.join(process.cwd(), 'requests.log'), logMsg);
+    }
+    return originalSetHeader.apply(this, arguments as any);
+  };
+  next();
+});
+
 // Initialize server-side Gemini client
 let ai: GoogleGenAI | null = null;
 try {
@@ -75,6 +88,16 @@ ${SKILLS.map(s => `* [${s.category}] ${s.name} (精通度: ${s.level}%)`).join('
 2. 回答格式：請善用 Markdown 格式，如精美列表、粗體、甚至是引用區塊，讓視覺效果極佳，但文字不要像牆壁一樣長，要條理清晰、易於閱讀。
 3. 行動呼籲：如果訪客表現出極高興趣、或是提到有職缺機會/專案合作，請主動提供李振邦的聯絡方式 (${PERSONAL_INFO.email}、${PERSONAL_INFO.phone}) 並邀請訪客在右下方直接填寫聯絡表單發送郵件。
 `;
+
+// API routes go here FIRST
+app.get("/api/debug", (req, res) => {
+  res.json({
+    node_env: process.env.NODE_ENV,
+    cwd: process.cwd(),
+    dist_exists: fs.existsSync(path.join(process.cwd(), 'dist')),
+    timestamp: new Date().toISOString()
+  });
+});
 
 // AI Chatbot endpoint
 app.post("/api/chat", async (req, res) => {
@@ -157,12 +180,21 @@ async function startServer() {
           };
 
           const contentType = mimeTypes[ext] || 'application/octet-stream';
+          
+          // Log request and Content-Type to /requests.log
+          const logMsg = `[${new Date().toISOString()}] STATIC req: ${req.path}, file: ${filePath}, ext: ${ext}, mime: ${contentType}\n`;
+          fs.appendFileSync(path.join(process.cwd(), 'requests.log'), logMsg);
+
           res.setHeader('Content-Type', contentType);
           fs.createReadStream(filePath).pipe(res);
           return;
+        } else {
+          const logMsg = `[${new Date().toISOString()}] MISSING file for req: ${req.path}, tried: ${filePath}\n`;
+          fs.appendFileSync(path.join(process.cwd(), 'requests.log'), logMsg);
         }
-      } catch (err) {
+      } catch (err: any) {
         console.error("Static file serving error:", err);
+        fs.appendFileSync(path.join(process.cwd(), 'requests.log'), `[${new Date().toISOString()}] ERROR: ${err.message}\n`);
       }
       next();
     });
@@ -170,6 +202,8 @@ async function startServer() {
     // Fallback for SPA routing: serve index.html with explicit text/html MIME type
     app.get('*', (req, res) => {
       const indexPath = path.join(distPath, 'index.html');
+      const logMsg = `[${new Date().toISOString()}] FALLBACK wildcard req: ${req.path}, serving: ${indexPath}\n`;
+      fs.appendFileSync(path.join(process.cwd(), 'requests.log'), logMsg);
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       fs.createReadStream(indexPath).pipe(res);
     });
