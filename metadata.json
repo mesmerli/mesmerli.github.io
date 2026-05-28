@@ -1,0 +1,6 @@
+{
+  "name": "AI 互動作品集",
+  "description": "具備 AI 互動助理的現代化個人作品集，讓訪客能以對話方式即時探索我的職涯經歷、精選專案、專業技能與創作理念。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
