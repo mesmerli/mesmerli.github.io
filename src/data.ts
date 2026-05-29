@@ -54,7 +54,7 @@ export const PROJECTS: Project[] = [
     title: 'aiCompare - 智慧 FFI 檔案與資料夾比對工具',
     category: 'fullstack',
     description: '結合極速 Rust 差異比對引擎與 Compose Desktop GUI (Kotlin) 的高質感、高效能檔案與資料夾比對工具。',
-    longDescription: 'aiCompare 是一款結合極速 Rust 差異比對引擎 與 Compose Desktop GUI (Kotlin) 的高質感、高效能檔案與資料夾比對工具，底層採用 JNI/FFI (JNA) 技術進行動態對接。傳統的比較工具是鐵面無私的機器，只看物理路徑，無法妥善處理重構、移位、改名等情境。而我們的 aiCompare 實作了「智慧虛擬對齊」演算法，能精準看懂工程師的重構習慣，具備深度的理解直覺，能讓資深開發者在使用時由衷驚嘆：『這才是 2026 年該有的智慧比對工具！』在未來的 AI 協作時代中，AI Agent 作為重構與生成代碼的大腦，aiCompare 則為其專屬的顯微鏡與手術刀。AI Agent 能自動呼叫 aiCompare 在背景高速比對、過濾並合併萬行複雜代碼，僅在遇到連 AI 都無法通靈的世紀大衝突時，便在前端彈出我們精心設計的精美黑標 UI，引導人類工程師登入系統，實行「線上代碼手術」手動點擊確認。',
+    longDescription: 'aiCompare 是一款結合極速 Rust 差異比對引擎 與 Compose Desktop GUI (Kotlin) 的高質感、高效能檔案與資料夾比對工具。傳統的比較工具是鐵面無私的機器，只看物理路徑，無法妥善處理重構、移位、改名等情境。而我們的 aiCompare 實作了「智慧虛擬對齊」演算法，能精準看懂工程師的重構習慣，具備深度的理解直覺。在未來的 AI 協作時代中，AI Agent 作為重構與生成代碼的大腦，aiCompare 則為其專屬的顯微鏡與手術刀。',
     image: 'https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?auto=format&fit=crop&w=800&q=85',
     tags: ['Rust', 'Kotlin', 'Compose', 'JNI / JNA FFI', 'Diff Engine', 'Agent Tooling'],
     demoUrl: '',
