@@ -10,7 +10,6 @@ export default function Projects() {
 
   const categories = [
     { label: '全部作品', id: 'all' },
-    { label: 'AI 生成應用', id: 'ai' },
     { label: '全端系統', id: 'fullstack' },
     { label: '前端一體化', id: 'frontend' },
     { label: '極簡行動應用', id: 'mobile' },

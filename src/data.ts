@@ -8,55 +8,58 @@ export const PERSONAL_INFO = {
   email: 'mesmerli@hotmail.com',
   phone: '+886918808771',
   github: 'https://github.com/mesmerli',
-  linkedin: 'https://linkedin.com/in/mesmerli',
+  linkedin: 'https://www.linkedin.com/in/diego-cp-lee-b236b21/',
   location: '台灣新北市',
   avatarText: 'ML',
-  bio: '擁有 25 年以上的全端開發與架構設計實務經驗，熟悉各種現代化系統架構。熱衷於結合極致 UI 身歷其境的視覺體驗與穩健可擴展的後端微服務。專注於生成式 AI 應用開發、React 全端系統架構與雲端架構設計。致力於透過優雅的代碼，將複雜的商業邏輯化為流暢精緻的使用者體驗。',
-  tagline: '用優雅的程式碼與 25 載匠心，編織科技與美學的無限可能。',
+  bio: '擁有 25 年以上的全端開發與架構設計實務經驗，熟悉各種現代化系統架構。熱衷於結合極致 UI 身歷其境的視覺體驗與穩健可擴展的後端微服務。專注於生成式 AI 應用開發、React 全端系統架構與雲端架構設計。致力於透過優雅的代碼，將複雜的業務痛點轉化為令人驚豔的產品體驗。',
+  tagline: '用生命和熱情寫好每一行代碼，賦予系統靈活流暢、穩定可靠的靈魂。',
+  education: {
+    degree: '國立台灣大學 資訊工程學系 博士',
+    englishDegree: 'National Taiwan University - Computer Science'
+  },
   stats: [
-    { label: '實務經驗', value: '25+ 年' },
-    { label: '成功專案', value: '80+' },
-    { label: '開源貢獻', value: '1000+' },
-    { label: '滿意客戶', value: '100%' },
+    { label: '實務開發經驗', value: '25+' },
+    { label: '開源專案項目', value: '10+' },
+    { label: '引領技術團隊', value: '8+' }
   ]
 };
 
 export const PROJECTS: Project[] = [
   {
-    id: 'promptcraft',
-    title: 'PromptCraft - AI 提示詞工程平台',
-    category: 'ai',
-    description: '一個專為企業與 AI 精英設計的視覺化提示詞調試與協作治理平台，內建多模型 API 版本控制與提示詞優化器。',
-    longDescription: 'PromptCraft 是為了解決企業內部複雜 prompt 管理痛點而生的平台。它提供了一個高度直覺的對話介面，內置了鏈式 prompt 分析、歷史版本對比、團隊協作分享、AI 智慧優化（Prompt Polishing）以及邊際成本估算等功能。前端使用 React 19 與 Tailwind CSS 建構極致流暢的編輯器，後端整合多個大語言模型 API 進行負載平衡，完美協助團隊將 Prompt 效能提升達 40%。',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=85',
-    tags: ['React', 'Express', 'Gemini API', 'TypeScript', 'Tailwind CSS'],
-    demoUrl: 'https://example.com/demo/promptcraft',
-    githubUrl: 'https://github.com/ethanchen-dev/promptcraft',
+    id: 'twbig2',
+    title: '台灣大老二線上遊戲 (Big Two)',
+    category: 'frontend',
+    description: '經典台灣規則大老二撲克牌遊戲！支援網頁跨平台，具備絲滑順暢的發牌與出牌動畫、智慧選牌、生動音效與精準的牌型判斷。',
+    longDescription: '這是一個專為網頁端建置的經典台灣「大老二」撲克牌遊戲。運用 React + TypeScript 與 Framer Motion 建構極致流暢的手牌物理互動、3D 牌面質感與動態出牌特效。系統內建完整的牌型審查引擎，精準判定台灣大老二的各式經典組合（梅花三開局、單張、對子、順子、同花、葫蘆、鐵支、同花順）以及出牌限制。未來規劃支援 Socket.io 進行多人即時連線對戰，將道地的台灣卡牌文化帶到世界的舞台。',
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=85',
+    tags: ['React', 'TypeScript', 'Motion', 'Tailwind CSS', 'Web Audio API'],
+    demoUrl: 'https://mesmerli.github.io/twbig2/',
+    githubUrl: 'https://github.com/mesmerli/taiwan-big-two-ai',
     featured: true,
   },
   {
-    id: 'aetherflow',
-    title: 'AetherFlow - 微服務架構日誌分析系統',
-    category: 'fullstack',
-    description: '高吞吐量分散式微服務監控與日誌即時分析儀表板，支持異常自動偵測與多通道警報。',
-    longDescription: 'AetherFlow 是一款針對現代 K8s 微服務集群開發的日誌追蹤監控系統。前端透過 Recharts 繪製即時效能圖表，並以 WebSockets 做即時日誌流與警報推送。系統底層整合了快速檢索機制，能在毫秒內對數百萬條日誌進行全文搜索與關聯分析。並採用輕量級機器學習演算法，在背景自動分類與標記異常行為，提供智能修復建議，使團隊的運維響應速度大幅提升 50% 以上。',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=85',
-    tags: ['React', 'D3.js', 'WebSockets', 'Express', 'Tailwind CSS'],
-    demoUrl: 'https://example.com/demo/aetherflow',
-    githubUrl: 'https://github.com/ethanchen-dev/aetherflow',
-    featured: true,
-  },
-  {
-    id: 'minimalist-habit',
-    title: 'ZenRoute - 極簡生活習慣與日程管理 App',
+    id: 'menubartodo',
+    title: 'MenuBar Todo - 輕量常駐選單列待辦助手',
     category: 'mobile',
-    description: '結合行為心理學的優雅日程與習慣養成追蹤程式，具備擬真微互動與 3D 觸覺設計。',
-    longDescription: 'ZenRoute 是以極簡美學（Wabi-Sabi）為設計本質的習慣追蹤應用。採用 React + Motion 架構開發，提供極致流暢的卡片式翻轉、手勢拖曳與高度反應的物理碰撞擬真效果。內建數據統計模組，以創新的「星軌圖」視覺化使用者習慣的維持程度。不含任何喧賓奪主的通知廣告，僅以呼吸般的介面引導使用者在日常中找回專注與平靜。',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=85',
-    tags: ['React', 'Motion', 'Tailwind CSS', 'LocalStorage', 'Mobile Web'],
-    demoUrl: 'https://example.com/demo/zenroute',
-    githubUrl: 'https://github.com/ethanchen-dev/zenroute',
-    featured: false,
+    description: '專為 macOS 效率人士打造的常駐選單列極簡待辦工具，支援快捷鍵極速喚醒、智慧語意解析與超低記憶體佔用。',
+    longDescription: '這是一款專為 macOS 用戶設計的常駐選單列（Menu Bar）待辦事項高效管理工具。採用 Swift 與 SwiftUI 進行原生開發，具有極輕量化的背景常駐機制，確保超低延遲與系統資源佔用。平台內建智慧 NLP 語意分析引擎，能自動提取任務輸入中的日期與優先度等級（如輸入「下午 3 點會議」即刻自動生成提醒）。支援豐富的主題風格切換、全局 Hotkey 快捷喚醒、精美的流暢動畫。開源後於社群獲得廣泛好評。',
+    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=800&q=85',
+    tags: ['Swift', 'SwiftUI', 'macOS App', 'Combine', 'CocoaPods'],
+    demoUrl: '',
+    githubUrl: 'https://github.com/mesmerli/MenuBarTodo',
+    featured: true,
+  },
+  {
+    id: 'aicompare',
+    title: 'aiCompare - 智慧 FFI 檔案與資料夾比對工具',
+    category: 'fullstack',
+    description: '結合極速 Rust 差異比對引擎與 Compose Desktop GUI (Kotlin) 的高質感、高效能檔案與資料夾比對工具。',
+    longDescription: 'aiCompare 是一款結合極速 Rust 差異比對引擎 與 Compose Desktop GUI (Kotlin) 的高質感、高效能檔案與資料夾比對工具，底層採用 JNI/FFI (JNA) 技術進行動態對接。傳統的比較工具是鐵面無私的機器，只看物理路徑，無法妥善處理重構、移位、改名等情境。而我們的 aiCompare 實作了「智慧虛擬對齊」演算法，能精準看懂工程師的重構習慣，具備深度的理解直覺，能讓資深開發者在使用時由衷驚嘆：『這才是 2026 年該有的智慧比對工具！』在未來的 AI 協作時代中，AI Agent 作為重構與生成代碼的大腦，aiCompare 則為其專屬的顯微鏡與手術刀。AI Agent 能自動呼叫 aiCompare 在背景高速比對、過濾並合併萬行複雜代碼，僅在遇到連 AI 都無法通靈的世紀大衝突時，便在前端彈出我們精心設計的精美黑標 UI，引導人類工程師登入系統，實行「線上代碼手術」手動點擊確認。',
+    image: 'https://images.unsplash.com/photo-1531747118685-ca8fa6e08806?auto=format&fit=crop&w=800&q=85',
+    tags: ['Rust', 'Kotlin', 'Compose', 'JNI / JNA FFI', 'Diff Engine', 'Agent Tooling'],
+    demoUrl: '',
+    githubUrl: 'https://github.com/mesmerli/aiCompare',
+    featured: true,
   },
   {
     id: 'omnichat',
@@ -67,7 +70,7 @@ export const PROJECTS: Project[] = [
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=85',
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'HTML5 Drag-Drop', 'Motion'],
     demoUrl: 'https://example.com/demo/omnichat',
-    githubUrl: 'https://github.com/ethanchen-dev/omnichat',
+    githubUrl: 'https://github.com/mesmerli/omnichat',
     featured: false,
   },
 ];
@@ -75,49 +78,50 @@ export const PROJECTS: Project[] = [
 export const EXPERIENCES: Experience[] = [
   {
     id: 'exp1',
-    role: '資深全端工程師 & 技術組長',
-    company: '鼎創卓越科技 (TrendInnovate CO., LTD.)',
-    companyUrl: 'https://example.com/trendinnovate',
+    role: '技術總監 & 首席架構師 (CTO & Chief Architect)',
+    company: '梅西萊 (mesmerli CO., LTD.)',
+    companyUrl: 'https://github.com/mesmerli',
     location: '台北市',
-    period: '2023.08 ~ 至今',
-    description: '擔任領先金融科技部門技術組長，負責帶領 8 人前端與後端研發團隊，設計兼具高併發與極致用戶體驗之全鏈條系統。',
+    period: '2020.10 ~ 至今',
+    description: '擔任技術委員會核心領導者與首席架構師，負責引領研發團隊設計兼具高併發、極致動態渲染與生成式 AI 架構之微服務與雲端基礎設施。',
     points: [
-      '主導開發新一代生成式 AI 對話系統與高吞吐量報表監控儀表板，成功為公司拓展 5 家上市企業客戶。',
-      '主導前端架構遷移至 React 18+ 與新一代打包工具，建構企業級組件庫，大幅縮短頁面加載時間（LCP 下降 45%），提高開發效率達 35%。',
-      '打造高彈性的 RESTful APIs 與 WebSocket 即時數據流，重構多核心交易模組，確保系統能承受 10,000+ TPS 的尖峰負載。',
-      '導入 CI/CD 自動化部署流程、單元測試（Jest/React Testing Library），提升整體軟體質量與上線穩定度。'
+      '主導建置雲端原生微服務與混合雲架構，導入自動伸縮機制與分散式負載平衡，設計支持 10萬+ RPS 級別的大規模生產系統。',
+      '引領團隊研發智能生成式 AI 工具鏈、主導開發高階 FFI 跨平台檔案比對工具（aiCompare），透過 Rust 與 Compose Desktop 實現極速虛擬動態對齊與核心引擎設計。',
+      '將核心系統逐步現代化為 React 18 / 19 結合新型編譯架構，創立高度模組化的 UI 組件體系，使新產品落地週期大幅縮短 40%。',
+      '規劃多代核心架構演進，並與全球研發、安全與設計部門緊密協作，確保系統兼具高擴展性與極致的用戶體驗。'
     ],
-    tags: ['React', 'TypeScript', 'Node.js', 'Express', 'DevOps', 'Docker', 'AI Workflows']
+    tags: ['Next.js / React 19', 'TypeScript', 'Node.js', 'Kubernetes', 'AWS / GCP Cloud', 'Generative AI', 'High-Scale Dev']
   },
   {
     id: 'exp2',
-    role: '全端開發工程師',
-    company: '啟明星數位軟體 (SparkStar Studio)',
-    companyUrl: 'https://example.com/sparkstar',
+    role: '資深全端研發主管 & 技術專家 (Senior Staff Full-Stack Engineer)',
+    company: 'IBM (International Business Machine)',
+    companyUrl: 'https://github.com/mesmerli',
     location: '台北市',
-    period: '2020.03 ~ 2023.07',
-    description: '負責設計並實作面向海外市場的跨境電商 SaaS 平台的行銷分析雲、以及高彈性內容管理系統（CMS）。',
+    period: '2012.05 ~ 2020.09',
+    description: '負責指導公司核心全端產品設計與性能最佳化，主導跨國 SaaS 電商平台與大型企業級協同對話系統架構之改良。',
     points: [
-      '獨立研發動態內容渲染組件與大數據 D3 可視化分析儀表板，使非技術背景的行銷人員能快速解讀百萬級銷售數據。',
-      '基於 Node.js / Express 設計分散式任務調度系統，支援日均數十萬張圖片的自動縮減、上色與分發，大幅節省雲端存儲空間與帶寬費用。',
-      '優化資料庫查詢效能，將百萬級資料關聯查詢時間從 2.8s 優化至 150ms 內。',
-      '與海外多國 UI/UX 設計組通力合作，以無障礙（WCAG 2.1 AA）為準則重構電商收銀核心流程，訂單轉換率提升將近 12%。'
+      '獨立規劃並主導開發極致順暢的單頁面團隊協同對話系統（OmniChat），在極大資料量下實現毫秒級虛擬滾動與零延遲交互體驗。',
+      '重構海量資料關聯庫查詢與寫入阻礙問題，導入智能分表與多級緩存策略，成功將核心報表產出反應速度最佳化 10 倍以上。',
+      '帶領核心技術攻堅小組，推動全端代碼標準及前端動態效能遷移，為公司的 SaaS 業務提供強大的穩定運作保障。',
+      '推行完善的自動化測試流（CI/CD Tools / Vitest / End-to-End Testing）與容器化部署流程，使開發上線出錯機率大幅降低 80%'
     ],
-    tags: ['React', 'Redux', 'Express', 'PostgreSQL', 'D3.js', 'Vite', 'RESTful API']
+    tags: ['React', 'TypeScript', 'Node.js / Express', 'PostgreSQL', 'WebSockets', 'Docker', 'SaaS Architecture']
   },
   {
     id: 'exp3',
-    role: '初級前端工程師',
-    company: '藍圖科技 (BlueMap Creative)',
-    location: '新竹市',
-    period: '2019.01 ~ 2020.02',
-    description: '負責開發各式高度定製的企業官網、動態互動網頁以及品牌行銷微服務網頁。',
+    role: '資深系統分析師 & 遊戲 AI 研發專家 (Senior Systems Analyst & Game Engine Architect)',
+    company: '台灣大學智慧生活研究室 (National Taiwan Univerity, Smart Living Research Lab)',
+    location: '新北市',
+    period: '2000.01 ~ 2012.04',
+    description: '將深厚的台大資工博士學術背景與系統設計相結合，專注於經典遊戲交互引擎設計、自適應 AI 計算以及高性能底層網路拓撲。',
     points: [
-      '撰寫客製化網頁動畫效果，運用原生 JS、CSS3 與 canvas 動畫引擎，參與開發多個榮獲大獎之行銷案。',
-      '確保跨瀏覽器（IE11、Chrome、Safari、Mobile）之完美兼容性，實踐高度響應式排版（RWD）。',
-      '與後端開發團隊對接 API 介面，使用 AJAX 精巧處理異步與加載狀態控制，優化使用者直覺感受。'
+      '自研高物理擬真與出牌判定規則之台灣卡牌遊戲引擎（Big Two Engine），精準涵蓋道地台灣規則，並透過微秒級演算法優化出牌決策判定與智慧選牌。',
+      '採用 Swift/SwiftUI 為 macOS 開發多款極輕量背景常駐常值工具，包括兼具卓越語意解析的選單列待辦工具（MenuBar Todo），榮登開源社群熱門。',
+      '撰寫與最佳化多個核心異步 Socket 即時同步伺服器，解決極端網路擁塞與瞬發連線不穩定情境下的連線狀態同步問題。',
+      '負責大型分布式多人線上桌遊的核心資料同步與牌局決策樹計算，提供高流暢度之音效合成、物體運動及玩家策略回饋。'
     ],
-    tags: ['JavaScript', 'HTML5/CSS3', 'Sass', 'Webpack', 'GreenSock (GSAP)', 'RWD']
+    tags: ['C++ / Java', 'Game Physics Engine', 'Heuristic AI', 'Socket Programming', 'macOS Cocoa / Swift', 'Databases']
   }
 ];
 

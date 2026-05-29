@@ -66,16 +66,18 @@ export default function About() {
             </div>
 
             {/* NTU Education Section */}
-            <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
-              <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 border border-slate-150">
-                <GraduationCap size={18} />
+            {PERSONAL_INFO.education && (
+              <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-700 border border-slate-150">
+                  <GraduationCap size={18} />
+                </div>
+                <div>
+                  <span className="block text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">學術背景</span>
+                  <span className="block text-sm font-extrabold text-slate-900 mt-0.5">{PERSONAL_INFO.education.degree}</span>
+                  <span className="block text-xs text-slate-500 mt-0.5">{PERSONAL_INFO.education.englishDegree}</span>
+                </div>
               </div>
-              <div>
-                <span className="block text-[9px] font-mono text-slate-400 uppercase tracking-widest font-bold">學術背景</span>
-                <span className="block text-sm font-extrabold text-slate-900 mt-0.5">國立台灣大學 資訊工程學系 碩士 & 學士</span>
-                <span className="block text-xs text-slate-500 mt-0.5">National Taiwan University - Computer Science</span>
-              </div>
-            </div>
+            )}
           </motion.div>
 
           {/* Grid Right: Value blocks (Vertical layout) */}
