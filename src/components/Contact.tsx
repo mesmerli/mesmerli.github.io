@@ -35,6 +35,12 @@ export default function Contact() {
     const templateId = env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = env.VITE_EMAILJS_PUBLIC_KEY;
 
+    console.log('EmailJS Configuration Diagnostic:', {
+      hasServiceId: !!serviceId,
+      hasTemplateId: !!templateId,
+      hasPublicKey: !!publicKey,
+    });
+
     if (!serviceId || !templateId || !publicKey) {
       console.warn('EmailJS environment variables are not configured. Falling back to simulation mode.');
       setTimeout(() => {
