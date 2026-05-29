@@ -9,13 +9,15 @@ import { PERSONAL_INFO, PROJECTS, EXPERIENCES, SKILLS } from "./src/data";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 app.use(express.json());
 
 // Top-level complete request logger to identify MIME type mismatch files
 app.use((req, res, next) => {
   const originalSetHeader = res.setHeader;
+  const originalWriteHead = res.writeHead;
+
   res.setHeader = function(name, value) {
     if (name.toLowerCase() === 'content-type') {
       const logMsg = `[${new Date().toISOString()}] HEADERS-SET: ${req.method} ${req.path} -> ${name}: ${value}\n`;
@@ -23,6 +25,26 @@ app.use((req, res, next) => {
     }
     return originalSetHeader.apply(this, arguments as any);
   };
+
+  res.writeHead = function(statusCode, ...args) {
+    let headers: any = null;
+    if (args.length > 0) {
+      if (typeof args[args.length - 1] === 'object') {
+        headers = args[args.length - 1];
+      } else if (typeof args[0] === 'object' && !Array.isArray(args[0])) {
+        headers = args[0];
+      }
+    }
+    if (headers) {
+      const ct = headers['Content-Type'] || headers['content-type'] || headers['Content-type'];
+      if (ct) {
+        const logMsg = `[${new Date().toISOString()}] WRITE-HEAD: ${req.method} ${req.path} -> Content-Type: ${ct}\n`;
+        fs.appendFileSync(path.join(process.cwd(), 'requests.log'), logMsg);
+      }
+    }
+    return originalWriteHead.apply(this, [statusCode, ...args]);
+  };
+
   next();
 });
 
@@ -201,6 +223,15 @@ async function startServer() {
 
     // Fallback for SPA routing: serve index.html with explicit text/html MIME type
     app.get('*', (req, res) => {
+      // If the request points to a static asset (e.g., .js, .css, images), do not serve index.html fallback
+      const ext = path.extname(req.path).toLowerCase();
+      if (ext && ext !== '.html' && ext !== '.htm') {
+        const logMsg = `[${new Date().toISOString()}] ASSET-NOT-FOUND req: ${req.path}\n`;
+        fs.appendFileSync(path.join(process.cwd(), 'requests.log'), logMsg);
+        res.status(404).type('text/plain').send('Asset not found');
+        return;
+      }
+
       const indexPath = path.join(distPath, 'index.html');
       const logMsg = `[${new Date().toISOString()}] FALLBACK wildcard req: ${req.path}, serving: ${indexPath}\n`;
       fs.appendFileSync(path.join(process.cwd(), 'requests.log'), logMsg);
