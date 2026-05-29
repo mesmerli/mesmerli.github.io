@@ -103,10 +103,16 @@ export default function Skills() {
               專精範疇：生成式 AI 自定義 Agent 應對流程、雲端高併發核心模組重構。
             </span>
           </div>
-          <p className="text-[10px] font-mono text-slate-400 flex items-center gap-1 uppercase tracking-wider font-bold">
+          <button
+            id="view-experience-btn"
+            onClick={() => {
+              document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="text-[10px] font-mono text-slate-400 hover:text-slate-900 flex items-center gap-1 uppercase tracking-wider font-bold transition-colors cursor-pointer focus:outline-hidden"
+          >
             <span>檢視詳細經歷點擊工作經歷</span>
             <ChevronRight size={12} />
-          </p>
+          </button>
         </div>
 
       </div>
