@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { PERSONAL_INFO } from '../data';
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       setErrMessage('請確認填妥您的姓名、聯絡信箱與留言內容！');
@@ -29,11 +30,39 @@ export default function Contact() {
 
     setStatus('loading');
 
-    // Simulate sending network request (1.2 seconds)
-    setTimeout(() => {
+    const env = (import.meta as any).env || {};
+    const serviceId = env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = env.VITE_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
+      console.warn('EmailJS environment variables are not configured. Falling back to simulation mode.');
+      setTimeout(() => {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }, 1200);
+      return;
+    }
+
+    try {
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        name: formData.name,
+        email: formData.email,
+        reply_to: formData.email,
+        subject: formData.subject || '來自網頁作品集的聯絡訊息',
+        message: formData.message,
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1200);
+    } catch (error: any) {
+      console.error('EmailJS Error:', error);
+      setErrMessage(`發送失敗：${error?.text || error?.message || '未知錯誤'}`);
+      setStatus('error');
+    }
   };
 
   return (
@@ -182,10 +211,17 @@ export default function Contact() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="p-4 rounded-md bg-slate-50 border border-slate-200 flex items-center gap-3 text-slate-800"
+                    className="p-4 rounded-md bg-slate-50 border border-slate-200 flex flex-col gap-2 text-slate-800"
                   >
-                    <CheckCircle2 size={16} className="text-blue-600 flex-shrink-0" />
-                    <span className="text-xs font-sans font-medium">您的訊息已成功送出！李振邦 (mesmerli) 會在第一時間詳閱並回信，非常感謝！</span>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 size={16} className="text-blue-600 flex-shrink-0" />
+                      <span className="text-xs font-sans font-medium">您的訊息已成功送出！李振邦 (mesmerli) 會在第一時間詳閱並回信，非常感謝！</span>
+                    </div>
+                    {!((import.meta as any).env?.VITE_EMAILJS_SERVICE_ID && (import.meta as any).env?.VITE_EMAILJS_TEMPLATE_ID && (import.meta as any).env?.VITE_EMAILJS_PUBLIC_KEY) && (
+                      <p className="text-[10px] text-slate-500 font-mono leading-relaxed pl-7 border-t border-slate-100 pt-1.5 mt-0.5">
+                        💡 提示：目前聯絡功能處於預覽發送模式。若要於正式發布版啟用真實電子信箱發送落點，請在您的平台環境變數中設定 EmailJS Service ID, Template ID 與 Public Key 憑證。
+                      </p>
+                    )}
                   </motion.div>
                 )}
 

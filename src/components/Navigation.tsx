@@ -3,11 +3,10 @@ import { Menu, X, Bot, Github, Linkedin, Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../data';
 
 interface NavigationProps {
-  onOpenAiAssistant: () => void;
   activeSection: string;
 }
 
-export default function Navigation({ onOpenAiAssistant, activeSection }: NavigationProps) {
+export default function Navigation({ activeSection }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -94,26 +93,19 @@ export default function Navigation({ onOpenAiAssistant, activeSection }: Navigat
               </a>
             </div>
 
-            {/* AI Assistant Quick Trigger */}
+            {/* Contact Quick Trigger */}
             <button
-              id="nav-ai-btn"
-              onClick={onOpenAiAssistant}
+              id="nav-contact-btn"
+              onClick={() => scrollToSection('contact')}
               className="flex items-center gap-2 px-4 h-9 rounded-md bg-slate-900 hover:bg-slate-850 text-white font-sans text-xs font-semibold tracking-wide uppercase transition-all duration-250 cursor-pointer shadow-xs"
             >
-              <Bot size={13} className="text-teal-400" />
-              <span>與 AI 分身聊聊</span>
+              <Mail size={13} className="text-blue-400" />
+              <span>聯絡我</span>
             </button>
           </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={onOpenAiAssistant}
-              className="p-2 rounded-lg bg-slate-100 text-slate-700 border border-slate-200"
-              title="AI 助理"
-            >
-              <Bot size={16} />
-            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-slate-555 hover:text-slate-900 transition-colors duration-200 cursor-pointer"
@@ -155,12 +147,12 @@ export default function Navigation({ onOpenAiAssistant, activeSection }: Navigat
             <button
               onClick={() => {
                 setIsOpen(false);
-                onOpenAiAssistant();
+                scrollToSection('contact');
               }}
               className="flex items-center gap-2 px-4 py-2 rounded-md bg-slate-900 text-white font-sans text-xs font-bold transition-all duration-200 cursor-pointer"
             >
-              <Bot size={12} className="text-teal-400" />
-              <span>與 AI 分身聊聊</span>
+              <Mail size={12} className="text-blue-400" />
+              <span>聯絡我</span>
             </button>
           </div>
         </div>

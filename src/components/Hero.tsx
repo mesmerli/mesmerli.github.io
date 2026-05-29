@@ -3,11 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowUpRight, Bot, Sparkles, Mail, Circle } from 'lucide-react';
 import { PERSONAL_INFO } from '../data';
 
-interface HeroProps {
-  onOpenAiAssistant: () => void;
-}
-
-export default function Hero({ onOpenAiAssistant }: HeroProps) {
+export default function Hero() {
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
     if (element) {
@@ -108,12 +104,12 @@ export default function Hero({ onOpenAiAssistant }: HeroProps) {
               </button>
 
               <button
-                id="hero-ai-assistant-btn"
-                onClick={onOpenAiAssistant}
+                id="hero-contact-btn"
+                onClick={scrollToContact}
                 className="flex items-center justify-center gap-2 px-6 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-sans font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-xs"
               >
-                <Bot size={14} className="text-teal-600" />
-                <span>與我的 AI 助理對話</span>
+                <Mail size={14} className="text-blue-600" />
+                <span>與我聯繫</span>
               </button>
             </motion.div>
 
