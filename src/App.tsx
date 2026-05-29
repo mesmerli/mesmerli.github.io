@@ -8,9 +8,11 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import { PERSONAL_INFO } from './data';
 import { Heart } from 'lucide-react';
+import { useLanguage } from './context/LanguageContext';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
+  const { t, tText } = useLanguage();
 
   // Set up intersection observer for navigation highlighting
   useEffect(() => {
@@ -66,17 +68,17 @@ export default function App() {
       <footer id="app-footer" className="bg-white border-t border-slate-200/50 py-12 px-6 lg:px-8 text-center text-xs text-slate-500 relative z-10 font-sans">
         <div className="max-w-7xl mx-auto space-y-4">
           <div className="flex items-center justify-center gap-2 text-slate-900 font-bold mb-2 text-xs sm:text-sm">
-            <span>{PERSONAL_INFO.name}</span>
+            <span>{tText(PERSONAL_INFO.name, PERSONAL_INFO.nameEn)}</span>
             <span>•</span>
             <span>{PERSONAL_INFO.englishName}</span>
           </div>
           <p className="max-w-md mx-auto leading-relaxed text-slate-500">
-            採用 React 19 + TypeScript + Motion + Tailwind CSS 設計的極致流暢個人全端作品網頁。
+            {t('footer.sub')}
           </p>
           <div className="flex items-center justify-center gap-1 text-[10px] text-slate-400 pt-4 font-medium uppercase tracking-wider font-mono">
             <span>© 2026 {PERSONAL_INFO.englishName}. Designed with</span>
             <Heart size={10} className="text-red-500 fill-red-500 inline" />
-            <span>in Taipei, Taiwan. All Rights Reserved.</span>
+            <span>in Taipei, Taiwan. {t('footer.rights')}</span>
           </div>
         </div>
       </footer>

@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { PERSONAL_INFO } from '../data';
 import emailjs from '@emailjs/browser';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Contact() {
+  const { t, tText } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -23,7 +25,7 @@ export default function Contact() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
-      setErrMessage('請確認填妥您的姓名、聯絡信箱與留言內容！');
+      setErrMessage(t('contact.form.required'));
       setStatus('error');
       return;
     }
@@ -66,7 +68,12 @@ export default function Contact() {
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error: any) {
       console.error('EmailJS Error:', error);
-      setErrMessage(`發送失敗：${error?.text || error?.message || '未知錯誤'}`);
+      setErrMessage(
+        tText(
+          `發送失敗：${error?.text || error?.message || '未知錯誤'}`,
+          `Failed to deliver: ${error?.text || error?.message || 'Unknown error'}`
+        )
+      );
       setStatus('error');
     }
   };
@@ -81,13 +88,13 @@ export default function Contact() {
         {/* Section Heading */}
         <div className="text-center md:text-left md:flex md:items-end md:justify-between mb-16 pb-6 border-b border-slate-200">
           <div>
-            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">GET IN TOUCH</span>
+            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">{t('contact.tag')}</span>
             <h2 className="font-sans font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tighter">
-              啟動專案合作與對話
+              {t('contact.title')}
             </h2>
           </div>
           <p className="max-w-md text-slate-500 text-xs sm:text-sm mt-4 md:mt-0 font-sans leading-relaxed">
-            歡迎填寫表單快速留言，或透過下方的聯絡渠道與我一同釋放無限可能。
+            {t('contact.sub')}
           </p>
         </div>
 
@@ -97,10 +104,10 @@ export default function Contact() {
           <div className="lg:col-span-5 flex flex-col justify-between space-y-12">
             <div className="space-y-6">
               <h3 className="font-sans font-extrabold text-2xl text-slate-900 tracking-tight">
-                準備好開始創造不一樣了嗎？
+                {t('contact.subtitle')}
               </h3>
               <p className="font-sans text-xs sm:text-sm text-slate-650 leading-relaxed max-w-sm">
-                不論是全新的外包專案、客製化生成式 AI 工具開發、正職職缺招聘，或是單純的技術交流，都非常歡迎隨時與我聯繫。
+                {t('contact.lead')}
               </p>
             </div>
 
@@ -111,7 +118,7 @@ export default function Contact() {
                   <Mail size={16} />
                 </div>
                 <div>
-                  <span className="block text-[9px] font-mono text-slate-450 uppercase tracking-widest font-bold">電子信箱</span>
+                  <span className="block text-[9px] font-mono text-slate-450 uppercase tracking-widest font-bold">{t('contact.email')}</span>
                   <a href={`mailto:${PERSONAL_INFO.email}`} className="block text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors">
                     {PERSONAL_INFO.email}
                   </a>
@@ -123,7 +130,7 @@ export default function Contact() {
                   <Phone size={16} />
                 </div>
                 <div>
-                  <span className="block text-[9px] font-mono text-slate-450 uppercase tracking-widest font-bold">聯絡專線</span>
+                  <span className="block text-[9px] font-mono text-slate-450 uppercase tracking-widest font-bold">{t('contact.phone')}</span>
                   <a href={`tel:${PERSONAL_INFO.phone}`} className="block text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors">
                     {PERSONAL_INFO.phone}
                   </a>
@@ -135,8 +142,8 @@ export default function Contact() {
                   <MapPin size={16} />
                 </div>
                 <div>
-                  <span className="block text-[9px] font-mono text-slate-450 uppercase tracking-widest font-bold">通訊定居</span>
-                  <span className="block text-sm font-bold text-slate-800">{PERSONAL_INFO.location}</span>
+                  <span className="block text-[9px] font-mono text-slate-450 uppercase tracking-widest font-bold">{t('contact.location')}</span>
+                  <span className="block text-sm font-bold text-slate-800">{tText(PERSONAL_INFO.location, PERSONAL_INFO.locationEn)}</span>
                 </div>
               </div>
             </div>
@@ -154,27 +161,27 @@ export default function Contact() {
               {/* Row: Name and Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-1.5">
-                  <label htmlFor="name" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">您的姓名 *</label>
+                  <label htmlFor="name" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">{t('contact.form.name')}</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    placeholder="例如：林陳美"
+                    placeholder={tText("例如：林陳美", "e.g., Jane Done")}
                     className="w-full h-11 px-4 rounded-md bg-slate-50 border border-slate-200 font-sans text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-hidden transition-all shadow-xs"
                     required
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label htmlFor="email" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">聯絡電子信箱 *</label>
+                  <label htmlFor="email" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">{t('contact.form.email')}</label>
                   <input
-                    type="email"
+                    type="type"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="例如：visitor@example.com"
+                    placeholder="visitor@example.com"
                     className="w-full h-11 px-4 rounded-md bg-slate-50 border border-slate-200 font-sans text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-hidden transition-all shadow-xs"
                     required
                   />
@@ -183,28 +190,28 @@ export default function Contact() {
 
               {/* Subject */}
               <div className="space-y-1.5">
-                <label htmlFor="subject" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">主旨主題</label>
+                <label htmlFor="subject" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">{t('contact.form.subject')}</label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  placeholder="例如：專案外包洽詢"
+                  placeholder={tText("例如：專案外包洽詢", "e.g., Freelance Project Collaboration")}
                   className="w-full h-11 px-4 rounded-md bg-slate-50 border border-slate-200 font-sans text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-hidden transition-all shadow-xs"
                 />
               </div>
 
               {/* Message */}
               <div className="space-y-1.5">
-                <label htmlFor="message" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">留言細節 *</label>
+                <label htmlFor="message" className="block text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">{t('contact.form.message')}</label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
                   rows={4}
-                  placeholder="請敘述您的專案需求、合作細節或職缺特徵，我會盡速回信..."
+                  placeholder={tText("請敘述您的專案需求、合作細節或職缺特徵，我會盡速回信...", "Please describe your project needs, opportunity details, or role specifications...")}
                   className="w-full p-4 rounded-md bg-slate-50 border border-slate-200 font-sans text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-hidden transition-all resize-none shadow-xs"
                   required
                 />
@@ -221,11 +228,19 @@ export default function Contact() {
                   >
                     <div className="flex items-center gap-3">
                       <CheckCircle2 size={16} className="text-blue-600 flex-shrink-0" />
-                      <span className="text-xs font-sans font-medium">您的訊息已成功送出！李振邦 (mesmerli) 會在第一時間詳閱並回信，非常感謝！</span>
+                      <span className="text-xs font-sans font-medium">
+                        {tText(
+                          "您的訊息已成功送出！李振邦 (mesmerli) 會在第一時間詳閱並回信，非常感謝！",
+                          "Your message has been successfully delivered! Diego Lee will read and reply shortly. Thank you!"
+                        )}
+                      </span>
                     </div>
                     {!((import.meta as any).env?.VITE_EMAILJS_SERVICE_ID && (import.meta as any).env?.VITE_EMAILJS_TEMPLATE_ID && (import.meta as any).env?.VITE_EMAILJS_PUBLIC_KEY) && (
-                      <p className="text-[10px] text-slate-500 font-mono leading-relaxed pl-7 border-t border-slate-100 pt-1.5 mt-0.5">
-                        💡 提示：目前聯絡功能處於預覽發送模式。若要於正式發布版啟用真實電子信箱發送落點，請在您的平台環境變數中設定 EmailJS Service ID, Template ID 與 Public Key 憑證。
+                      <p className="text-[10px] text-slate-500 font-mono leading-relaxed pl-7 border-t border-slate-100 pt-1.5 mt-0.5 animate-pulse">
+                        {tText(
+                          "💡 提示：目前聯絡功能處於預覽發送模式。若要於正式發布版啟用真實電子信箱發送落點，請在您的平台環境變數中設定 EmailJS Service ID, Template ID 與 Public Key 憑證。",
+                          "💡 Hint: Currently in local preview simulation mode. For production delivery, configure VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your env setup."
+                        )}
                       </p>
                     )}
                   </motion.div>
@@ -254,12 +269,12 @@ export default function Contact() {
                 {status === 'loading' ? (
                   <>
                     <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                    <span>正安全傳送中...</span>
+                    <span>{t('contact.form.sending')}</span>
                   </>
                 ) : (
                   <>
                     <Send size={12} />
-                    <span>送出問詢訊息</span>
+                    <span>{t('contact.form.submit')}</span>
                   </>
                 )}
               </button>

@@ -1,8 +1,11 @@
 export interface Project {
   id: string;
   title: string;
+  titleEn: string;
   description: string;
+  descriptionEn: string;
   longDescription: string;
+  longDescriptionEn: string;
   image: string;
   tags: string[];
   demoUrl?: string;
@@ -14,12 +17,18 @@ export interface Project {
 export interface Experience {
   id: string;
   role: string;
+  roleEn: string;
   company: string;
+  companyEn: string;
   companyUrl?: string;
   location: string;
+  locationEn: string;
   period: string;
+  periodEn: string;
   description: string;
+  descriptionEn: string;
   points: string[];
+  pointsEn: string[];
   tags: string[];
 }
 

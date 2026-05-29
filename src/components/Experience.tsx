@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Briefcase, Calendar, MapPin, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import { EXPERIENCES } from '../data';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Experience() {
+  const { t, tText } = useLanguage();
   const [expandedId, setExpandedId] = useState<string | null>('exp1'); // expand first by default!
 
   const toggleExpand = (id: string) => {
@@ -20,13 +22,13 @@ export default function Experience() {
         {/* Section Heading */}
         <div className="text-center md:text-left md:flex md:items-end md:justify-between mb-16 pb-6 border-b border-slate-200">
           <div>
-            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">WORK HISTORY</span>
+            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">{t('experience.tag')}</span>
             <h2 className="font-sans font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tighter">
-              職涯實戰與技術軌跡
+              {t('experience.title')}
             </h2>
           </div>
           <p className="max-w-md text-slate-500 text-xs sm:text-sm mt-4 md:mt-0 font-sans leading-relaxed">
-            在不同企業中擔任全端核心開發者與技術推進者之經歷。
+            {t('experience.sub')}
           </p>
         </div>
 
@@ -34,6 +36,7 @@ export default function Experience() {
         <div className="relative border-l border-slate-200 ml-4 md:ml-8 pl-8 md:pl-12 space-y-12">
           {EXPERIENCES.map((exp, index) => {
             const isExpanded = expandedId === exp.id;
+            const pointsToRender = tText(exp.points, exp.pointsEn);
             return (
               <motion.div
                 key={exp.id}
@@ -60,10 +63,10 @@ export default function Experience() {
                 >
                   {/* Top Details Header */}
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 flex-grow">
                       <div className="flex items-center gap-3 flex-wrap">
                         <h3 className="font-sans font-extrabold text-base sm:text-lg text-slate-900 tracking-tight">
-                          {exp.role}
+                          {tText(exp.role, exp.roleEn)}
                         </h3>
                         {exp.companyUrl ? (
                           <a 
@@ -73,12 +76,12 @@ export default function Experience() {
                             className="inline-flex items-center gap-1 text-[10px] uppercase font-mono font-bold text-slate-800 bg-slate-100 border border-slate-200 px-2.5 py-1 rounded hover:bg-slate-150 transition-colors"
                             onClick={(e) => e.stopPropagation()} // stop parent trigger!
                           >
-                            <span>{exp.company}</span>
+                            <span>{tText(exp.company, exp.companyEn)}</span>
                             <ExternalLink size={9} />
                           </a>
                         ) : (
                           <span className="text-[10px] uppercase font-mono text-slate-500 bg-slate-50 px-2.5 py-1 rounded border border-slate-200">
-                            {exp.company}
+                            {tText(exp.company, exp.companyEn)}
                           </span>
                         )}
                       </div>
@@ -87,11 +90,11 @@ export default function Experience() {
                       <div className="flex flex-wrap items-center gap-4 text-[10px] font-mono text-slate-400 font-semibold uppercase tracking-wider pt-1">
                         <span className="flex items-center gap-1">
                           <Calendar size={11} className="text-slate-400" />
-                          <span>{exp.period}</span>
+                          <span>{tText(exp.period, exp.periodEn)}</span>
                         </span>
                         <span className="flex items-center gap-1">
                           <MapPin size={11} className="text-slate-400" />
-                          <span>{exp.location}</span>
+                          <span>{tText(exp.location, exp.locationEn)}</span>
                         </span>
                       </div>
                     </div>
@@ -109,13 +112,15 @@ export default function Experience() {
                     }`}
                   >
                     <p className="text-xs sm:text-sm text-slate-600 text-sans leading-relaxed italic mb-6">
-                      {exp.description}
+                      {tText(exp.description, exp.descriptionEn)}
                     </p>
 
                     {/* Bullet Points achievements */}
                     <div className="space-y-3">
-                      <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-2 font-bold">關鍵工作成就</h4>
-                      {exp.points.map((pt, i) => (
+                      <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-2 font-bold">
+                        {tText('關鍵工作成就', 'Key Core Achievements')}
+                      </h4>
+                      {pointsToRender.map((pt: string, i: number) => (
                         <div key={i} className="flex gap-2.5 items-start text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
                           <div className="w-1.5 h-1.5 rounded-full bg-slate-950 mt-2 flex-shrink-0" />
                           <span>{pt}</span>
@@ -125,7 +130,9 @@ export default function Experience() {
 
                     {/* Associated Skills tags inside project */}
                     <div className="mt-8 pt-4 border-t border-slate-100">
-                      <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-3 font-bold">應用的專業技能</h4>
+                      <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest mb-3 font-bold">
+                        {tText('應用的專業技能', 'Involved Engineering Technologies')}
+                      </h4>
                       <div className="flex flex-wrap gap-1.5">
                         {exp.tags.map((tag, i) => (
                           <span key={i} className="text-[10px] font-mono px-2.5 py-1 rounded bg-slate-50 border border-slate-200 text-slate-600 font-medium whitespace-nowrap">

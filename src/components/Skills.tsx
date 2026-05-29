@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Code2, Server, Cloud, Paintbrush, ChevronRight } from 'lucide-react';
 import { SKILLS } from '../data';
 import { Skill } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Skills() {
+  const { t, tText } = useLanguage();
   const categories: Array<Skill['category']> = ['Frontend', 'Backend', 'DevOps & Cloud', 'Design / Other'];
   const [activeTab, setActiveTab] = useState<Skill['category']>('Frontend');
 
@@ -22,20 +24,20 @@ export default function Skills() {
   return (
     <section id="skills" className="py-24 bg-slate-50/50 relative overflow-hidden border-b border-slate-200/50">
       {/* Background radial highlight */}
-      <div className="absolute top-1/4 right-0 w-[400px] h-[400px] rounded-full bg-slate-400/[0.04] blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full bg-slate-400/[0.04] blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         
         {/* Section Heading */}
         <div className="text-center md:text-left md:flex md:items-end md:justify-between mb-16 pb-6 border-b border-slate-200">
           <div>
-            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">TECHNICAL STACK</span>
+            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">{t('skills.tag')}</span>
             <h2 className="font-sans font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tighter">
-              掌握專業技術與前沿開發
+              {t('skills.title')}
             </h2>
           </div>
           <p className="max-w-md text-slate-500 text-xs sm:text-sm mt-4 md:mt-0 font-sans leading-relaxed">
-            涵蓋雲端架構、全端運維、前端體驗設計及現代 AI 模型提示詞工程開發。
+            {t('skills.sub')}
           </p>
         </div>
 
@@ -68,7 +70,7 @@ export default function Skills() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between hover:border-slate-300 transition-all duration-200 shadow-xs"
+                className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col justify-between hover:border-slate-350 transition-all duration-200 shadow-xs"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2.5">
@@ -100,7 +102,10 @@ export default function Skills() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
             </span>
             <span className="text-xs font-sans font-medium text-slate-700">
-              專精範疇：生成式 AI 自定義 Agent 應對流程、雲端高併發核心模組重構。
+              {tText(
+                "專精範疇：生成式 AI 自定義 Agent 應對流程、雲端高併發核心模組重構。",
+                "Expertise Core: Custom Generative AI agent workflows, and distributed microservice bottleneck engineering."
+              )}
             </span>
           </div>
           <button
@@ -110,7 +115,7 @@ export default function Skills() {
             }}
             className="text-[10px] font-mono text-slate-400 hover:text-slate-900 flex items-center gap-1 uppercase tracking-wider font-bold transition-colors cursor-pointer focus:outline-hidden"
           >
-            <span>檢視詳細經歷點擊工作經歷</span>
+            <span>{tText("檢視詳細經歷點擊工作經歷", "View Career Experiences")}</span>
             <ChevronRight size={12} />
           </button>
         </div>

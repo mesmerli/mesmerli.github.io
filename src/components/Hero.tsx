@@ -2,8 +2,11 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, Bot, Sparkles, Mail, Circle } from 'lucide-react';
 import { PERSONAL_INFO } from '../data';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
+  const { t, tText } = useLanguage();
+
   const scrollToProjects = () => {
     const element = document.getElementById('projects');
     if (element) {
@@ -54,7 +57,7 @@ export default function Hero() {
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-slate-200 text-blue-600 font-mono text-[11px] font-bold tracking-wider uppercase shadow-xs"
             >
               <Sparkles size={12} className="text-blue-500 animate-pulse" />
-              <span>開放專案合作 & 正職機會中</span>
+              <span>{t('hero.status')}</span>
               <Circle size={6} className="fill-blue-500 stroke-none animate-ping ml-1" />
             </motion.div>
 
@@ -63,27 +66,27 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="font-sans font-extrabold text-5xl sm:text-6xl text-slate-900 tracking-tighter leading-tight"
+                className="font-sans font-extrabold text-4xl sm:text-5xl lg:text-6xl text-slate-900 tracking-tighter leading-tight animate-fade-in"
               >
-                你好，我是 <span className="block mt-1 text-slate-900">{PERSONAL_INFO.name}</span>
+                {t('hero.greeting')} <span className="block mt-1 text-slate-900">{tText(PERSONAL_INFO.name, PERSONAL_INFO.nameEn)}</span>
               </motion.h1>
 
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="font-sans font-semibold text-lg sm:text-xl text-blue-600 uppercase tracking-widest mt-2"
+                className="font-sans font-semibold text-base sm:text-lg text-blue-600 uppercase tracking-widest mt-2"
               >
-                {PERSONAL_INFO.title}
+                {tText(PERSONAL_INFO.title, PERSONAL_INFO.englishTitle)}
               </motion.h2>
 
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="font-sans text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl"
+                className="font-sans text-sm sm:text-base text-slate-650 leading-relaxed max-w-xl"
               >
-                {PERSONAL_INFO.bio}
+                {tText(PERSONAL_INFO.bio, PERSONAL_INFO.bioEn)}
               </motion.p>
             </div>
 
@@ -99,7 +102,7 @@ export default function Hero() {
                 onClick={scrollToProjects}
                 className="flex items-center justify-center gap-2 px-6 h-12 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-sans font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-xs"
               >
-                <span>瀏覽精選專案</span>
+                <span>{t('hero.projectsButton')}</span>
                 <ArrowUpRight size={14} />
               </button>
 
@@ -109,7 +112,7 @@ export default function Hero() {
                 className="flex items-center justify-center gap-2 px-6 h-12 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-sans font-semibold text-xs uppercase tracking-wider transition-all duration-300 cursor-pointer shadow-xs"
               >
                 <Mail size={14} className="text-blue-600" />
-                <span>與我聯繫</span>
+                <span>{t('hero.contactButton')}</span>
               </button>
             </motion.div>
 
@@ -122,7 +125,7 @@ export default function Hero() {
             >
               {PERSONAL_INFO.stats.map((stat, i) => (
                 <div key={i} className="space-y-1">
-                  <span className="block font-mono text-[10px] text-slate-500 tracking-widest uppercase">{stat.label}</span>
+                  <span className="block font-mono text-[9px] text-slate-500 tracking-widest uppercase">{tText(stat.label, stat.labelEn)}</span>
                   <span className="block font-sans font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight">{stat.value}</span>
                 </div>
               ))}
@@ -153,18 +156,18 @@ export default function Hero() {
 
               {/* Aesthetic Text layout */}
               <div className="my-8 space-y-4">
-                <div className="font-mono text-slate-400 text-[10px] tracking-wider uppercase mb-1">{"// Core Philosophy"}</div>
-                <div className="font-sans italic text-base sm:text-lg text-slate-600 font-light leading-relaxed">
-                  「{PERSONAL_INFO.tagline}」
+                <div className="font-mono text-slate-400 text-[10px] tracking-wider uppercase mb-1">{t('hero.philosophy')}</div>
+                <div className="font-sans italic text-sm sm:text-base text-slate-600 font-light leading-relaxed">
+                  「{tText(PERSONAL_INFO.tagline, PERSONAL_INFO.taglineEn)}」
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="h-[1px] bg-slate-100 flex-grow" />
-                  <span className="font-mono text-[9px] text-slate-400 uppercase tracking-widest">Stack Focus</span>
+                  <span className="font-mono text-[9px] text-slate-400 uppercase tracking-widest">{t('hero.stackFocus')}</span>
                   <div className="h-[1px] bg-slate-100 flex-grow" />
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {['React & Next', 'Generative AI', 'TypeScript', 'Node / Nest'].map((t, i) => (
-                    <span key={i} className="text-[10px] font-mono px-2.5 py-1 rounded bg-slate-50 border border-slate-150 text-slate-600">
+                    <span key={i} className="text-[10px] font-mono px-2.5 py-1 rounded bg-slate-50 border border-slate-150 text-slate-600 animate-pulse">
                       {t}
                     </span>
                   ))}
@@ -174,8 +177,8 @@ export default function Hero() {
               {/* Action Invitation */}
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-center justify-between">
                 <div>
-                  <span className="block text-xs font-bold text-slate-900">正在尋找合作夥伴嗎？</span>
-                  <span className="block text-[9px] font-mono text-slate-500 mt-1">發送電子郵件以啟動專案</span>
+                  <span className="block text-xs font-bold text-slate-900">{t('hero.partnerTitle')}</span>
+                  <span className="block text-[9px] font-mono text-slate-500 mt-1">{t('hero.partnerSub')}</span>
                 </div>
                 <button
                   onClick={scrollToContact}

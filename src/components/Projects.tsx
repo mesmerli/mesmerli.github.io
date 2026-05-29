@@ -3,16 +3,18 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ExternalLink, Github, ArrowUpRight, Sparkles, X } from 'lucide-react';
 import { PROJECTS } from '../data';
 import { Project } from '../types';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Projects() {
+  const { t, tText } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activeModalProject, setActiveModalProject] = useState<Project | null>(null);
 
   const categories = [
-    { label: '全部作品', id: 'all' },
-    { label: '全端系統', id: 'fullstack' },
-    { label: '前端一體化', id: 'frontend' },
-    { label: '極簡行動應用', id: 'mobile' },
+    { label: t('projects.all'), id: 'all' },
+    { label: tText('全端系統', 'Full-Stack Systems'), id: 'fullstack' },
+    { label: tText('前端一體化', 'Frontend Portals'), id: 'frontend' },
+    { label: tText('極簡行動應用', 'Mac Desktop Apps'), id: 'mobile' },
   ];
 
   const filteredProjects = selectedCategory === 'all'
@@ -29,13 +31,13 @@ export default function Projects() {
         {/* Section Heading */}
         <div className="text-center md:text-left md:flex md:items-end md:justify-between mb-16 pb-6 border-b border-slate-200">
           <div>
-            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">PORTFOLIO</span>
+            <span className="font-mono text-[10px] text-blue-600 uppercase tracking-widest block mb-2 font-bold">{t('projects.tag')}</span>
             <h2 className="font-sans font-extrabold text-3xl sm:text-4xl text-slate-900 tracking-tighter">
-              精選成果與開源專案
+              {t('projects.title')}
             </h2>
           </div>
           <p className="max-w-md text-slate-500 text-xs sm:text-sm mt-4 md:mt-0 font-sans leading-relaxed">
-            點擊各個作品卡片即可閱覽深入的技術架構與關鍵系統設計。
+            {t('projects.sub')}
           </p>
         </div>
 
@@ -75,7 +77,7 @@ export default function Projects() {
                 <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-50 border-b border-slate-150">
                   <img
                     src={project.image}
-                    alt={project.title}
+                    alt={tText(project.title, project.titleEn)}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover group-hover:scale-101 transition-transform duration-300"
                   />
@@ -93,8 +95,12 @@ export default function Projects() {
                 {/* Card Content Brief */}
                 <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
                   <div className="space-y-3">
-                    <h3 className="font-sans font-extrabold text-lg text-slate-900 tracking-tight">{project.title}</h3>
-                    <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">{project.description}</p>
+                    <h3 className="font-sans font-extrabold text-lg text-slate-900 tracking-tight">
+                      {tText(project.title, project.titleEn)}
+                    </h3>
+                    <p className="font-sans text-xs sm:text-sm text-slate-600 leading-relaxed line-clamp-3">
+                      {tText(project.description, project.descriptionEn)}
+                    </p>
                   </div>
 
                   {/* Tags */}
@@ -118,18 +124,18 @@ export default function Projects() {
                       onClick={() => setActiveModalProject(project)}
                       className="text-xs font-sans font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 cursor-pointer"
                     >
-                      <span>技術解析 & 系統導覽</span>
+                      <span>{tText('技術解析 & 系統導覽', 'Technical Deep-Dive')}</span>
                       <ArrowUpRight size={13} />
                     </button>
 
                     <div className="flex items-center gap-3 text-slate-450">
                       {project.githubUrl && (
-                        <a href={project.githubUrl} target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors" title="檢視原始碼">
+                        <a href={project.githubUrl} target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors" title={tText('檢視原始碼', 'View Source Code')}>
                           <Github size={15} />
                         </a>
                       )}
                       {project.demoUrl && (
-                        <a href={project.demoUrl} target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors" title="開啟 Live 網頁">
+                        <a href={project.demoUrl} target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors" title={tText('開啟 Live 網頁', 'Open Live Demo')}>
                           <ExternalLink size={15} />
                         </a>
                       )}
@@ -160,7 +166,7 @@ export default function Projects() {
                 <div className="relative aspect-[21/9] w-full overflow-hidden bg-slate-50 border-b border-slate-200">
                   <img
                     src={activeModalProject.image}
-                    alt={activeModalProject.title}
+                    alt={tText(activeModalProject.title, activeModalProject.titleEn)}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
                   />
@@ -178,23 +184,23 @@ export default function Projects() {
                 <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-1">
                   <div className="space-y-3">
                     <span className="inline-flex px-2.5 py-1 rounded bg-slate-100 border border-slate-200 text-[10px] font-mono font-bold text-slate-700 uppercase tracking-widest leading-none">
-                      {activeModalProject.category} 專案
+                      {tText(`${activeModalProject.category} 專案`, `${activeModalProject.category} Project`)}
                     </span>
                     <h3 className="font-sans font-extrabold text-2xl text-slate-900 tracking-tight">
-                      {activeModalProject.title}
+                      {tText(activeModalProject.title, activeModalProject.titleEn)}
                     </h3>
                   </div>
 
                   <div className="space-y-3">
-                    <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">核心架構與實踐解析</h4>
+                    <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">{tText('核心架構與實踐解析', 'Core Architecture & Implementation Details')}</h4>
                     <p className="font-sans text-slate-650 leading-relaxed text-sm">
-                      {activeModalProject.longDescription}
+                      {tText(activeModalProject.longDescription, activeModalProject.longDescriptionEn)}
                     </p>
                   </div>
 
                   {/* Expanded Stack Cards */}
                   <div className="space-y-3 pt-4 border-t border-slate-100">
-                    <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">配屬技術堆疊</h4>
+                    <h4 className="text-[10px] font-mono text-slate-400 uppercase tracking-widest font-bold">{tText('配屬技術堆疊', 'Associated Tech Stack')}</h4>
                     <div className="flex flex-wrap gap-1.5">
                       {activeModalProject.tags.map((tag, i) => (
                         <span key={i} className="text-[10px] font-mono px-3 py-1 rounded bg-slate-50 border border-slate-200 text-slate-700 font-medium">
@@ -215,7 +221,7 @@ export default function Projects() {
                         rel="noreferrer"
                         className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs"
                       >
-                        <span>線上展示 Demo</span>
+                        <span>{tText('線上展示 Demo', 'Live Interactive Demo')}</span>
                         <ExternalLink size={12} />
                       </a>
                     )}
@@ -234,9 +240,9 @@ export default function Projects() {
                   <button
                     id="close-modal-footer"
                     onClick={() => setActiveModalProject(null)}
-                    className="text-xs font-sans font-bold text-slate-400 hover:text-slate-800 cursor-pointer"
+                    className="text-xs font-sans font-bold text-slate-400 hover:text-slate-800 cursor-pointer text-sans"
                   >
-                    關閉
+                    {tText('關閉', 'Close')}
                   </button>
                 </div>
 

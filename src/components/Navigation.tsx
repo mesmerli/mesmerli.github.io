@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Bot, Github, Linkedin, Mail } from 'lucide-react';
+import { Menu, X, Bot, Github, Linkedin, Mail, Globe } from 'lucide-react';
 import { PERSONAL_INFO } from '../data';
+import { useLanguage } from '../context/LanguageContext';
 
 interface NavigationProps {
   activeSection: string;
@@ -9,6 +10,7 @@ interface NavigationProps {
 export default function Navigation({ activeSection }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, t, tText } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +21,11 @@ export default function Navigation({ activeSection }: NavigationProps) {
   }, []);
 
   const navItems = [
-    { label: '關於我', id: 'about' },
-    { label: '核心技能', id: 'skills' },
-    { label: '精選專案', id: 'projects' },
-    { label: '工作經歷', id: 'experience' },
-    { label: '聯絡我', id: 'contact' },
+    { label: t('nav.about'), id: 'about' },
+    { label: t('nav.skills'), id: 'skills' },
+    { label: t('nav.projects'), id: 'projects' },
+    { label: t('nav.experience'), id: 'experience' },
+    { label: t('nav.contact'), id: 'contact' },
   ];
 
   const scrollToSection = (id: string) => {
@@ -58,8 +60,8 @@ export default function Navigation({ activeSection }: NavigationProps) {
               {PERSONAL_INFO.avatarText}
             </div>
             <div>
-              <span className="font-sans font-extrabold tracking-tight text-base text-slate-900 block leading-tight">{PERSONAL_INFO.name}</span>
-              <span className="font-mono text-[9px] text-slate-500 block tracking-widest uppercase">Senior Full-Stack</span>
+              <span className="font-sans font-extrabold tracking-tight text-base text-slate-900 block leading-tight">{tText(PERSONAL_INFO.name, PERSONAL_INFO.englishName)}</span>
+              <span className="font-mono text-[9px] text-slate-500 block tracking-widest uppercase">{t('nav.role')}</span>
             </div>
           </div>
 
@@ -84,7 +86,7 @@ export default function Navigation({ activeSection }: NavigationProps) {
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             {/* Quick Links */}
-            <div className="flex space-x-3 text-slate-450 mr-2">
+            <div className="flex space-x-3 text-slate-405 mr-2 items-center">
               <a href={PERSONAL_INFO.github} target="_blank" rel="noreferrer" className="hover:text-slate-900 transition-colors duration-200" title="GitHub">
                 <Github size={16} />
               </a>
@@ -93,6 +95,16 @@ export default function Navigation({ activeSection }: NavigationProps) {
               </a>
             </div>
 
+            {/* Language Selection Toggle */}
+            <button
+              onClick={() => setLanguage(language === 'zh-TW' ? 'en' : 'zh-TW')}
+              className="px-2.5 py-1.5 rounded-md border border-slate-200 hover:border-slate-350 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 font-sans text-[10px] font-bold tracking-wider transition-colors duration-200 cursor-pointer flex items-center gap-1.5 shadow-xs"
+              title="Switch Language / 切換語言"
+            >
+              <Globe size={11} className="text-slate-400" />
+              <span>{language === 'zh-TW' ? 'EN' : '繁中'}</span>
+            </button>
+
             {/* Contact Quick Trigger */}
             <button
               id="nav-contact-btn"
@@ -100,12 +112,24 @@ export default function Navigation({ activeSection }: NavigationProps) {
               className="flex items-center gap-2 px-4 h-9 rounded-md bg-slate-900 hover:bg-slate-850 text-white font-sans text-xs font-semibold tracking-wide uppercase transition-all duration-250 cursor-pointer shadow-xs"
             >
               <Mail size={13} className="text-blue-400" />
-              <span>聯絡我</span>
+              <span>{t('nav.contact')}</span>
             </button>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-3">
+            {/* Mobile Language Button Quick access */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setLanguage(language === 'zh-TW' ? 'en' : 'zh-TW');
+              }}
+              className="p-2.5 rounded-lg border border-slate-200/80 bg-white text-slate-600 hover:text-slate-900 text-[10px] font-bold tracking-widest cursor-pointer flex items-center gap-1"
+            >
+              <Globe size={11} className="text-slate-400" />
+              <span>{language === 'zh-TW' ? 'EN' : '繁中'}</span>
+            </button>
+
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-lg text-slate-555 hover:text-slate-900 transition-colors duration-200 cursor-pointer"
@@ -119,7 +143,7 @@ export default function Navigation({ activeSection }: NavigationProps) {
       {/* Mobile Menu */}
       <div 
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-[350px] border-b border-slate-200' : 'max-h-0'
+          isOpen ? 'max-h-[380px] border-b border-slate-200' : 'max-h-0'
         } bg-white`}
       >
         <div className="px-6 pt-2 pb-6 space-y-2">
@@ -152,7 +176,7 @@ export default function Navigation({ activeSection }: NavigationProps) {
               className="flex items-center gap-2 px-4 py-2 rounded-md bg-slate-900 text-white font-sans text-xs font-bold transition-all duration-200 cursor-pointer"
             >
               <Mail size={12} className="text-blue-400" />
-              <span>聯絡我</span>
+              <span>{t('nav.contact')}</span>
             </button>
           </div>
         </div>
